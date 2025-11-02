@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rasa sakit ini tidak gratis</title>
+    <style>
+        /* CSS untuk Tampilan */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --primary-color: #9f00ff; /* Ungu cerah */
+            --card-bg: #2a2a4e;
+            --text-color: #f0f0f0;
+            --input-bg: #1e1e3f;
+            --border-color: #4a4a7e;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        /* ----- CSS VIDEO (DIUBAH) ----- */
+        .header-video {
+            width: 80%; /* 1. Dikecilkan jadi 80% */
+            display: block; /* Agar bisa di-center */
+            margin-left: auto; /* Dibuat ke tengah */
+            margin-right: auto; /* Dibuat ke tengah */
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            background-color: #000;
+        }
+        /* ----- ----------------- ----- */
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #c0c0e0;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(159, 0, 255, 0.3);
+        }
+
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.41%200.58L6%205.17L10.59%200.58L12%202L6%208L0%202L1.41%200.58Z%22%20fill%3D%22%239F00FF%22/%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        
+        /* ----- CSS FOTO (BARU) ----- */
+        .image-container {
+            display: flex; /* Membuat gambar di dalamnya jadi bersebelahan */
+            justify-content: space-between; /* Memberi jarak di antara 2 foto */
+            margin-top: 24px; /* Jarak dari tombol */
+        }
+
+        .side-image {
+            width: 48%; /* Lebar foto (kurang dari 50% agar ada celah) */
+            border-radius: 8px; /* Sudut melengkung */
+        }
+        /* ----- ---------------- ----- */
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <video class="header-video" autoplay loop muted playsinline>
+            <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+        <h1>barmods X code</h1>
+        <form id="waForm">
+            <div class="form-group">
+                <label for="phone">Target Number</label>
+                <input type="text" id="phone" class="form-control" placeholder="Contoh: 628123456789" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="template">Pilih metode bug</label>
+                <select id="template" class="form-control" required>
+                    <option value="" disabled selected>by barmods</option>
+                    <option value="Halo, ini pesan tes.">Pesan Tipe 1 (Tes)</option>
+                    <option value="Permisi, mau tanya info.">Pesan Tipe 2 (Info)</option>
+                    <option value="Apa kabar?">Pesan Tipe 3 (Sapaan)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">gass bug</button>
+        </form>
+
+        <div class="image-container">
+            <img src="https://img1.pixhost.to/images/9872/657034725_offc.jpg" alt="Foto 1" class="side-image">
+            <img src="https://img1.pixhost.to/images/9872/657034725_offc.jpg" alt="Foto 2" class="side-image">
+        </div>
+        </div>
+
+    <script>
+        // JavaScript untuk Fungsionalitas
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let phone = document.getElementById('phone').value;
+            let message = document.getElementById('template').value;
+
+            let cleanPhone = phone.replace(/\D/g, '');
+            if (cleanPhone.startsWith('0')) {
+                cleanPhone = '62' + cleanPhone.substring(1);
+            }
+            else if (!cleanPhone.startsWith('62')) {
+                cleanPhone = '62' + cleanPhone;
+            }
+
+            let encodedMessage = encodeURIComponent(message);
+            const waURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+            window.open(waURL, '_blank');
+        });
+    </script>
+
+</body>
+</html>
