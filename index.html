@@ -31,21 +31,6 @@
             overflow: hidden; /* Sembunyikan scrollbar saat loading */
         }
         
-        /* --- [BARU] Layar Interaksi Awal (Tanpa Teks) --- */
-        #interaction-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            cursor: pointer;
-        }
-
         /* --- Halaman Loading --- */
         #loading-screen {
             position: fixed;
@@ -54,7 +39,7 @@
             width: 100vw;
             height: 100vh;
             background-color: #000;
-            display: none; /* Sembunyi dulu */
+            display: flex; 
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -64,7 +49,7 @@
         #loading-screen video {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: contain; /* Agar video pas dan tidak terpotong */
         }
 
         /* --- Halaman Login --- */
@@ -89,7 +74,7 @@
             color: #ff6b6b;
             text-align: center;
             margin-top: 15px;
-            display: none; 
+            display: none; /* Sembunyikan pesan error by default */
         }
 
 
@@ -135,7 +120,7 @@
             padding: 12px 5px;
             background-color: transparent;
             border: none;
-            color: #c0c0c0;
+            color: #c0c0e0;
             font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
@@ -196,7 +181,7 @@
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.41%200.58L6%205.17L10.59%200.58L12%202L6%208L0%202L1.41%200.58Z%22%20fill%3D%22%239F00FF%22/%3E%3C/svg%3E');
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.41%200.58L6%205.17L10.59%200.58L12%22%20fill%3D%22%239F00FF%22/%3E%3C/svg%3E');
             background-repeat: no-repeat;
             background-position: right 12px center;
             background-size: 12px;
@@ -272,11 +257,8 @@
 </head>
 <body>
 
-    <div id="interaction-screen">
-        </div>
-
     <div id="loading-screen">
-        <video id="intro-video" playsinline preload="auto"> 
+        <video id="intro-video" autoplay muted playsinline preload="auto"> 
             <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
             Browser Anda tidak mendukung video.
         </video>
@@ -301,7 +283,7 @@
     </div>
 
 
-    <div class.container" id="main-app-container">
+    <div class="container" id="main-app-container">
 
         <video class="header-video" autoplay loop muted playsinline>
             <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
@@ -327,7 +309,7 @@
                     <label for="template">Pilih metode bug</label>
                     <select id="template" class="form-control" required>
                         <option value="" disabled selected>by barmods</option>
-                        <option value="BARMODS AmpasꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾYITsbqJvEow">delay biasa</option>
+                        <option value="BARMODS Ampasꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾ">delay biasa</option>
                         <option value="blm gw set">delta 2023</option>
                         <option value="masih proses?">blank</option>
                         <option value="crash">crash</option>
@@ -387,7 +369,6 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- ELEMEN LOADING & LOGIN ---
-            const interactionScreen = document.getElementById('interaction-screen');
             const loadingScreen = document.getElementById('loading-screen');
             const introVideo = document.getElementById('intro-video');
             const loginScreen = document.getElementById('login-screen');
@@ -397,25 +378,16 @@
 
             // --- [DIUBAH] LOGIKA LOADING & LOGIN ---
             
-            // 1. Tampilkan layar interaksi (layar hitam)
-            interactionScreen.addEventListener('click', () => {
-                interactionScreen.style.display = 'none'; // Sembunyikan layar klik
-                loadingScreen.style.display = 'flex';  // Tampilkan layar video
-                
-                // Coba putar video dengan suara
-                var playPromise = introVideo.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        // Jika GAGAL (misal di iPhone mode silent)
-                        console.warn("Autoplay dengan suara gagal:", error);
-                        // Coba mainkan tanpa suara
-                        introVideo.muted = true;
-                        introVideo.play();
-                    });
-                }
-
-            }, { once: true }); // Hanya jalankan sekali
+            // 1. Langsung coba putar video (karena sudah 'autoplay muted' di HTML)
+            var playPromise = introVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // Jika autoplay muted pun gagal, 
+                    // langsung ke login.
+                    console.error("Autoplay muted gagal:", error);
+                    showLogin();
+                });
+            }
 
             // 2. Saat video selesai diputar
             introVideo.onended = () => {
@@ -559,10 +531,41 @@
             const aiSubmitBtn = document.getElementById('ai-submit-btn');
             const aiResultDiv = document.getElementById('ai-result');
 
-Two-step process:
+            aiForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const prompt = document.getElementById('ai-prompt').value;
+                if (!prompt) {
+                    aiResultDiv.innerText = "Silakan masukkan prompt terlebih dahulu.";
+                    return;
+                }
 
-1.  **Click anywhere on the black screen.**
-2.  The video will play with sound.
-3.  When the video finishes, the login screen will appear.
+                aiSubmitBtn.disabled = true;
+                aiSubmitBtn.innerText = "Memproses...";
+                aiResultDiv.innerText = "AI sedang berpikir...";
 
-This is the only way to satisfy the browser's security rules while still having the video play with sound.
+                try {
+                    const response = await fetch('/api/gemini', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: prompt }),
+                    });
+
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    aiResultDiv.innerText = data.reply;
+
+                } catch (error)
+                 {
+                    console.error('Error:', error);
+                    aiResultDiv.innerText = "Terjadi kesalahan saat menghubungi AI. Coba lagi nanti.";
+                } finally {
+                    aiSubmitBtn.disabled = false;
+                    aiSubmitBtn.innerText = "Kirim ke AI";
+                }
+            });
+
+        }); // Akhir dari DOMContentLoaded
+    </script>
+
+</body>
+</html>
