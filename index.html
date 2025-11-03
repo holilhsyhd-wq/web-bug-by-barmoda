@@ -1,571 +1,315 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rasa sakit ini tidak gratis</title>
-    <style>
-        /* CSS untuk Tampilan */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>barmods-X-delta</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07060b;
+  --card:#0f0f1a;
+  --accent:#9f00ff;
+  --muted:#cfd3ff;
+  --glass: rgba(255,255,255,0.03);
+  --danger:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#05050a 0%, #0b0b10 100%);color:var(--muted);-webkit-font-smoothing:antialiased}
+.app{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:1100px;border-radius:14px;padding:0;overflow:hidden;border:1px solid rgba(159,0,255,0.06);box-shadow:0 20px 60px rgba(0,0,0,0.6);background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));}
 
-        :root {
-            --bg-color: #1a1a2e;
-            --primary-color: #9f00ff; /* Ungu cerah */
-            --card-bg: #2a2a4e;
-            --text-color: #f0f0f0;
-            --input-bg: #1e1e3f;
-            --border-color: #4a4a7e;
-        }
+/* Loading fullscreen overlay */
+#interaction-screen, #loading-screen {
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#000; z-index:9999;
+}
+#interaction-screen{cursor:pointer}
+#loading-screen{display:none;flex-direction:column;gap:12px;padding:20px}
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex; /* Menggunakan flex untuk center */
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow: hidden; /* Sembunyikan scrollbar saat loading */
-        }
-        
-        /* --- Halaman Loading --- */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000;
-            display: flex; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        #loading-screen video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Agar video pas dan tidak terpotong */
-        }
+/* Login area */
+.login-wrap{display:flex;gap:0;align-items:stretch}
+.login-panel{width:380px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:28px;border-right:1px solid rgba(255,255,255,0.02);}
+.login-panel h2{margin:0 0 12px;color:var(--accent);font-size:1.4rem}
+.input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:var(--muted);margin-bottom:12px}
+.btn{display:inline-block;padding:12px 14px;border-radius:10px;background:var(--accent);color:#fff;font-weight:700;border:none;cursor:pointer}
+.small{font-size:0.85rem;color:rgba(191,192,230,0.7)}
 
-        /* --- Halaman Login --- */
-        #login-screen {
-            display: none; /* Sembunyi by default */
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
+/* Main dashboard */
+.dashboard{flex:1;padding:18px;display:flex;flex-direction:column;gap:12px}
+.header-banner{width:100%;height:180px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.02);background:linear-gradient(90deg, rgba(159,0,255,0.04), rgba(159,0,255,0.01));display:flex;align-items:center;justify-content:center}
+.header-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.top-row{display:flex;gap:12px}
+.col{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);flex:1;min-height:160px}
+.col.wide{flex:2}
+.label{display:block;font-size:0.9rem;color:rgba(191,192,230,0.9);margin-bottom:8px}
+.input-inline{display:flex;gap:8px}
+.select,input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:var(--glass);color:var(--muted)}
+textarea{min-height:120px;resize:vertical}
+.result{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;border:1px dashed rgba(255,255,255,0.02);min-height:100px;overflow:auto;white-space:pre-wrap;color:var(--muted)}
 
-        .login-box {
-            width: 100%;
-            max-width: 400px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
+/* footer */
+.footer{font-size:0.85rem;color:rgba(191,192,230,0.6);text-align:center;margin-top:6px}
 
-        #login-error {
-            color: #ff6b6b;
-            text-align: center;
-            margin-top: 15px;
-            display: none; /* Sembunyikan pesan error by default */
-        }
-
-
-        /* --- Kontainer Aplikasi Utama --- */
-        .container {
-            display: none; 
-            width: 100%;
-            max-width: 400px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-
-        .header-video {
-            width: 80%;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 8px; 
-            margin-bottom: 20px; 
-            background-color: #000;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--text-color);
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 24px;
-            letter-spacing: 1px;
-        }
-
-        .tab-nav {
-            display: flex;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-
-        .tab-button {
-            flex: 1;
-            padding: 12px 5px;
-            background-color: transparent;
-            border: none;
-            color: #c0c0e0;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-        }
-
-        .tab-button.active {
-            color: var(--primary-color);
-            font-weight: 700;
-            border-bottom-color: var(--primary-color);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #c0c0e0;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-color);
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(159, 0, 255, 0.3);
-        }
-
-        select.form-control {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.41%200.58L6%205.17L10.59%200.58L12%22%20fill%3D%22%239F00FF%22/%3E%3C/svg%3E');
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 12px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease;
-        }
-        
-        .btn-submit:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-
-        .image-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 24px;
-        }
-
-        .side-image {
-            width: 48%;
-            border-radius: 8px;
-        }
-        
-        .info-text, #ai-result, #tiktok-result {
-            font-size: 0.95rem;
-            color: #c0c0e0;
-            text-align: center;
-            line-height: 1.6;
-            background-color: var(--input-bg);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed var(--border-color);
-            word-wrap: break-word;
-        }
-        
-        #ai-result, #tiktok-result {
-            text-align: left;
-            min-height: 50px;
-        }
-        
-        #ai-result {
-             white-space: pre-wrap;
-             overflow-y: auto;
-        }
-        
-        .download-link {
-            display: block;
-            margin-top: 15px;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .download-link:hover {
-            background-color: #8a00e0;
-        }
-
-    </style>
+/* responsive */
+@media(max-width:980px){
+  .login-panel{width:320px;padding:16px}
+  .header-banner{height:140px}
+  .top-row{flex-direction:column}
+  .app{padding:12px}
+}
+</style>
 </head>
 <body>
 
-    <div id="loading-screen">
-        <video id="intro-video" autoplay muted playsinline preload="auto"> 
-            <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
-            Browser Anda tidak mendukung video.
-        </video>
-    </div>
+<!-- Initial click-to-start screen -->
+<div id="interaction-screen" title="Klik untuk memulai">
+  <div style="text-align:center;color:#fff">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px">Klik untuk memulai</div>
+    <div class="small">Tampilkan loading intro sebelum login</div>
+  </div>
+</div>
 
-    <div id="login-screen">
-        <div class="login-box"> 
-            <h1>Login Access</h1>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Password" required>
-                </div>
-                <button type="submit" class="btn-submit">Masuk</button>
-                <p id="login-error">Username atau password salah.</p>
-            </form>
-        </div>
-    </div>
+<!-- Loading screen with video -->
+<div id="loading-screen" aria-hidden="true">
+  <video id="intro-video" playsinline preload="auto" style="max-width:90vw;max-height:80vh;border-radius:12px">
+    <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
+    Browser Anda tidak mendukung video.
+  </video>
+  <div class="small" style="color:#fff">Sedang memuat... tunggu sebentar</div>
+</div>
 
+<div class="app" style="display:none" id="app-root">
+  <div class="card">
+    <div class="login-wrap">
 
-    <div class="container" id="main-app-container">
+      <!-- Left: login panel -->
+      <div class="login-panel" id="login-panel">
+        <h2>Login Access</h2>
+        <form id="loginForm">
+          <input id="username" class="input" type="text" placeholder="Username" required>
+          <input id="password" class="input" type="password" placeholder="Password" required>
+          <button class="btn" type="submit">Masuk</button>
+          <div id="login-error" class="small" style="color:var(--danger);display:none;margin-top:10px">Username atau password salah.</div>
+        </form>
+        <div style="margin-top:18px" class="small">Username: <strong>barmods</strong> &nbsp; Password: <strong>developer</strong></div>
+      </div>
 
-        <video class="header-video" autoplay loop muted playsinline>
-            <source src="https://files.catbox.moe/0ik9wn.mp4" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-        </video>
-        <h1>barmods X code</h1>
-
-        <div class="tab-nav">
-            <button class="tab-button active" data-tab="tab-wa">Kirim Pesan</button>
-            <button class="tab-button" data-tab="tab-osint">OSINT</button>
-            <button class="tab-button" data-tab="tab-tiktok">TikTok DL</button>
-            <button class="tab-button" data-tab="tab-ai">AI Chat</button>
+      <!-- Right: dashboard preview (hidden until login) -->
+      <div class="dashboard" id="dashboard" style="display:none">
+        <div class="header-banner">
+          <img id="banner-img" src="https://files.catbox.moe/4wbhkk.jpg" alt="Banner">
         </div>
 
-        <div id="tab-wa" class="tab-content active">
-            <form id="waForm">
-                <div class="form-group">
-                    <label for="phone">Target Number</label>
-                    <input type="text" id="phone" class="form-control" placeholder="Contoh: 628123456789" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="template">Pilih metode bug</label>
-                    <select id="template" class="form-control" required>
-                        <option value="" disabled selected>by barmods</option>
-                        <option value="BARMODS Ampasꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦾꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦽꦾ">delay biasa</option>
-                        <option value="blm gw set">delta 2023</option>
-                        <option value="masih proses?">blank</option>
-                        <option value="crash">crash</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-submit">gass bug</button>
-            </form>
-        </div>
-
-        <div id="tab-osint" class="tab-content">
-            <form id="osintForm">
-                <div class="form-group">
-                    <label for="osint-phone">Target Number</label>
-                    <input type="text" id="osint-phone" class="form-control" placeholder="Tempel nomor dari tab 'Kirim Pesan'">
-                </div>
-                <p style="font-size: 0.8rem; text-align: center; color: #c0c0e0; margin-top: -10px; margin-bottom: 20px;">
-                    Ini akan mencari nomor di Google (Facebook, Instagram, TikTok, dll.)
-                </p>
-                <button type="submit" class="btn-submit">Lacak via Google</button>
-            </form>
-        </div>
-
-        <div id="tab-tiktok" class="tab-content">
-            <form id="tiktokForm">
-                <div class="form-group">
-                    <label for="tiktok-url">Tempel URL Video TikTok</label>
-                    <input type="url" id="tiktok-url" class="form-control" placeholder="Contoh: https://www.tiktok.com/..." required>
-                </div>
-                <button type="submit" id="tiktok-submit-btn" class="btn-submit">Unduh Tanpa WM</button>
-            </form>
-            <div id="tiktok-result" style="margin-top: 20px;">
-                </div>
-        </div>
-
-        <div id="tab-ai" class="tab-content">
-            <form id="aiForm">
-                <div class="form-group">
-                    <label for="ai-prompt">Tanya Apa Saja ke AI</label>
-                    <textarea id="ai-prompt" class="form-control" rows="3" placeholder="Contoh: jelaskan apa itu OSINT"></textarea>
-                </div>
-                <button type="submit" id="ai-submit-btn" class="btn-submit">Kirim ke AI</button>
-            </form>
-            <div class="form-group" style="margin-top: 20px;">
-                <label for="ai-result">Jawaban AI:</label>
-                <div id="ai-result">Waiting for prompt...</div>
+        <div class="top-row">
+          <div class="col" style="max-width:320px">
+            <label class="label">Target Number (WA)</label>
+            <input id="phone" type="text" placeholder="Contoh: 628123456789">
+            <label class="label" style="margin-top:10px">Pilih Template</label>
+            <select id="template">
+              <option value="">Pilih template</option>
+              <option value="halo">crash</option>
+              <option value="BARMODS Ampas">BARMODS Ampas</option>
+              <option value="delta 2023">delta 2023</option>
+              <option value="blank">blank</option>
+            </select>
+            <div style="margin-top:12px">
+              <button id="wa-send" class="btn" style="width:100%">Kirim via WhatsApp</button>
             </div>
+          </div>
+
+          <div class="col wide">
+            <label class="label">AI Chat (Gemini)</label>
+            <textarea id="ai-prompt" placeholder="Contoh: jelaskan apa itu OSINT"></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button id="ai-submit" class="btn">Kirim ke AI</button>
+              <button id="ai-clear" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Kosongkan</button>
+            </div>
+            <div style="margin-top:10px">
+              <label class="label">Jawaban AI</label>
+              <div id="ai-result" class="result">Belum ada prompt.</div>
+            </div>
+          </div>
         </div>
 
-        <div class="image-container">
-            <img src="https://img1.pixhost.to/images/9872/657034725_offc.jpg" alt="Foto 1" class="side-image">
-            <img src="https://img1.pixhost.to/images/9872/657034725_offc.jpg" alt="Foto 2" class="side-image">
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <div class="col">
+            <label class="label">TikTok Downloader</label>
+            <input id="tiktok-url" type="url" placeholder="https://www.tiktok.com/...">
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button id="tiktok-submit" class="btn">Unduh Tanpa WM</button>
+              <button id="tiktok-clear" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)">Kosongkan</button>
+            </div>
+            <div style="margin-top:10px">
+              <div id="tiktok-result" class="result">Hasil akan tampil di sini.</div>
+            </div>
+          </div>
+
+          <div class="col">
+            <label class="label">OSINT - Lacak Nomor</label>
+            <input id="osint-phone" type="text" placeholder="Tempel nomor atau tekan isi dari WA">
+            <div style="margin-top:8px">
+              <button id="osint-btn" class="btn" style="width:100%">Lacak via Google</button>
+            </div>
+            <div style="margin-top:12px">
+              <label class="label">Informasi</label>
+              <div class="small">Setelah login, audio akan diputar otomatis. Jika browser mencegah autoplay, klik tombol play pada kontrol audio di pojok bawah.</div>
+            </div>
+          </div>
         </div>
+
+        <div class="footer">Deploy di Vercel • Pastikan set <code>GEMINI_API_KEY</code> di Environment Variables</div>
+      </div>
+
     </div>
+  </div>
+</div>
 
-    <script>
-        // Menjalankan script setelah semua HTML dimuat
-        document.addEventListener('DOMContentLoaded', () => {
+<!-- Background audio (attempt autoplay after login) -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="https://files.catbox.moe/27r5rt.mp3" type="audio/mpeg">
+</audio>
 
-            // --- ELEMEN LOADING & LOGIN ---
-            const loadingScreen = document.getElementById('loading-screen');
-            const introVideo = document.getElementById('intro-video');
-            const loginScreen = document.getElementById('login-screen');
-            const mainApp = document.getElementById('main-app-container');
-            const loginForm = document.getElementById('loginForm');
-            const loginError = document.getElementById('login-error');
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  const interaction = document.getElementById('interaction-screen');
+  const loading = document.getElementById('loading-screen');
+  const introVideo = document.getElementById('intro-video');
+  const appRoot = document.getElementById('app-root');
+  const loginForm = document.getElementById('loginForm');
+  const loginError = document.getElementById('login-error');
+  const dashboard = document.getElementById('dashboard');
+  const loginPanel = document.getElementById('login-panel');
+  const bgAudio = document.getElementById('bg-audio');
 
-            // --- [DIUBAH] LOGIKA LOADING & LOGIN ---
-            
-            // 1. Langsung coba putar video (karena sudah 'autoplay muted' di HTML)
-            var playPromise = introVideo.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // Jika autoplay muted pun gagal, 
-                    // langsung ke login.
-                    console.error("Autoplay muted gagal:", error);
-                    showLogin();
-                });
-            }
+  // Start interaction: click to show loading and play video, then show login
+  interaction.addEventListener('click', ()=>{
+    interaction.style.display = 'none';
+    loading.style.display = 'flex';
+    introVideo.currentTime = 0;
+    introVideo.muted = false;
+    const p = introVideo.play();
+    if(p && p.catch) {
+      p.catch(err=>{
+        // fallback: mute and play
+        introVideo.muted = true;
+        introVideo.play().catch(()=>{});
+      });
+    }
+  }, { once: true });
 
-            // 2. Saat video selesai diputar
-            introVideo.onended = () => {
-                showLogin();
-            };
+  // When video ends or errors, show login screen (login panel visible)
+  introVideo.onended = showLogin;
+  introVideo.onerror = showLogin;
 
-            // 3. Cadangan jika video error
-            introVideo.onerror = () => {
-                console.log("Video error, langsung ke login.");
-                showLogin();
-            };
-            
-            // Fungsi untuk menampilkan login
-            function showLogin() {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500); // 0.5s = durasi transisi opacity
+  function showLogin(){
+    loading.style.display = 'none';
+    appRoot.style.display = 'flex';
+    // keep dashboard hidden until login
+    loginPanel.style.display = 'block';
+    dashboard.style.display = 'none';
+  }
 
-                loginScreen.style.display = 'flex';
-                document.body.style.overflow = 'auto'; // Kembalikan scrollbar
-            }
+  // Handle login with provided credentials
+  loginForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    if(user === 'barmods' && pass === 'developer'){
+      // success: hide login panel, show dashboard, play audio
+      loginError.style.display = 'none';
+      loginPanel.style.display = 'none';
+      dashboard.style.display = 'block';
+      // try to autoplay audio
+      const playPromise = bgAudio.play();
+      if(playPromise !== undefined){
+        playPromise.catch(err=>{
+          console.warn('Autoplay audio gagal:', err);
+          // do nothing, user can interact to enable audio
+        });
+      }
+    } else {
+      loginError.style.display = 'block';
+    }
+  });
 
-            // 4. Saat tombol login diklik
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const user = document.getElementById('username').value;
-                const pass = document.getElementById('password').value;
+  // Utility to clean phone numbers
+  function cleanPhoneNumber(phone){
+    if(!phone) return '';
+    let clean = phone.replace(/\D/g,'');
+    if(clean.startsWith('0')) clean = '62' + clean.substring(1);
+    else if(!clean.startsWith('62')) clean = '62' + clean;
+    return clean;
+  }
 
-                if (user === 'barmods21' && pass === 'barmods') {
-                    loginScreen.style.display = 'none';
-                    mainApp.style.display = 'block'; 
-                } else {
-                    loginError.style.display = 'block';
-                }
-            });
+  // WhatsApp send
+  document.getElementById('wa-send').addEventListener('click', ()=>{
+    const phone = document.getElementById('phone').value;
+    const template = document.getElementById('template').value || '';
+    const clean = cleanPhoneNumber(phone);
+    if(!clean){ alert('Masukkan nomor target.'); return; }
+    document.getElementById('osint-phone').value = clean;
+    // If template equals 'halo' (for crash), send "halo"
+    const message = template === 'halo' ? 'halo' : template;
+    const encoded = encodeURIComponent(message);
+    const url = `https://wa.me/${clean}?text=${encoded}`;
+    window.open(url, '_blank');
+  });
 
+  // OSINT button
+  document.getElementById('osint-btn').addEventListener('click', ()=>{
+    const phone = document.getElementById('osint-phone').value;
+    if(!phone){ alert('Masukkan nomor telepon.'); return; }
+    const clean = cleanPhoneNumber(phone);
+    const query = `("${clean}" OR "0${clean.substring(2)}")`;
+    const sites = ['facebook.com','instagram.com','tiktok.com','twitter.com','linkedin.com','getcontact.com','truecaller.com'].map(s=>`site:${s}`).join(' OR ');
+    const finalQuery = `(${query}) AND (${sites})`;
+    window.open('https://www.google.com/search?q='+encodeURIComponent(finalQuery),'_blank');
+  });
 
-            // --- FUNGSI UNTUK MEMBERSIHKAN NOMOR TELEPON ---
-            function cleanPhoneNumber(phone) {
-                let cleanPhone = phone.replace(/\D/g, '');
-                if (cleanPhone.startsWith('0')) {
-                    cleanPhone = '62' + cleanPhone.substring(1);
-                } else if (!cleanPhone.startsWith('62')) {
-                    cleanPhone = '62' + cleanPhone;
-                }
-                return cleanPhone;
-            }
+  // TikTok downloader
+  document.getElementById('tiktok-submit').addEventListener('click', async ()=>{
+    const url = document.getElementById('tiktok-url').value.trim();
+    const result = document.getElementById('tiktok-result');
+    if(!url){ result.innerText = 'Masukkan URL TikTok terlebih dahulu.'; return; }
+    result.innerText = 'Memproses...';
+    try {
+      const resp = await fetch('/api/tiktok', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ url }) });
+      const data = await resp.json();
+      if(!resp.ok) throw new Error(data?.error || 'Gagal mengambil video.');
+      result.innerHTML = '<p>Video ditemukan!</p><a class="btn" href="'+data.downloadUrl+'" target="_blank" rel="noopener noreferrer" download>Klik untuk unduh</a>';
+    } catch(err){
+      console.error(err);
+      result.innerText = 'Error: ' + (err.message || err);
+    }
+  });
 
-            // --- FUNGSI UNTUK TAB ---
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
+  document.getElementById('tiktok-clear').addEventListener('click', ()=>{
+    document.getElementById('tiktok-url').value=''; document.getElementById('tiktok-result').innerText='Hasil akan tampil di sini.';
+  });
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    button.classList.add('active');
-                    document.getElementById(button.dataset.tab).classList.add('active');
-                });
-            });
-            
-            // --- JAVASCRIPT UNTUK TAB 1: KIRIM PESAN ---
-            document.getElementById('waForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                let phone = document.getElementById('phone').value;
-                let message = document.getElementById('template').value;
-                let cleanPhone = cleanPhoneNumber(phone);
-                document.getElementById('osint-phone').value = cleanPhone;
-                let encodedMessage = encodeURIComponent(message);
-                const waURL = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
-                window.open(waURL, '_blank');
-            });
+  // AI Chat (Gemini)
+  document.getElementById('ai-submit').addEventListener('click', async ()=>{
+    const prompt = document.getElementById('ai-prompt').value.trim();
+    const resDiv = document.getElementById('ai-result');
+    if(!prompt){ resDiv.innerText = 'Masukkan prompt terlebih dahulu.'; return; }
+    resDiv.innerText = 'AI sedang berpikir...';
+    try {
+      const resp = await fetch('/api/gemini', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt }) });
+      const data = await resp.json();
+      if(!resp.ok) throw new Error(data?.reply || 'Gagal menghubungi AI.');
+      resDiv.innerText = data.reply || 'Tidak ada balasan dari AI.';
+    } catch(err){
+      console.error(err);
+      resDiv.innerText = 'Error: ' + (err.message || err);
+    }
+  });
 
-            // --- JAVASCRIPT UNTUK TAB 2: OSINT ---
-            document.getElementById('osintForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                let phone = document.getElementById('osint-phone').value;
-                if (!phone) {
-                    alert('Masukkan nomor telepon terlebih dahulu.');
-                    return;
-                }
-                let cleanPhone = cleanPhoneNumber(phone);
-                let query = `"${cleanPhone}" OR "${'0' + cleanPhone.substring(2)}"`;
-                let sites = ['facebook.com', 'instagram.com', 'tiktok.com', 'twitter.com', 'linkedin.com', 'getcontact.com', 'truecaller.com'];
-                let siteQuery = sites.map(site => `site:${site}`).join(' OR ');
-                let finalQuery = `(${query}) AND (${siteQuery})`;
-                const searchURL = `https://www.google.com/search?q=${encodeURIComponent(finalQuery)}`;
-                window.open(searchURL, '_blank');
-            });
+  document.getElementById('ai-clear').addEventListener('click', ()=>{
+    document.getElementById('ai-prompt').value=''; document.getElementById('ai-result').innerText='Belum ada prompt.';
+  });
 
-            // --- JAVASCRIPT UNTUK TAB 3: TIKTOK DOWNLOADER ---
-            const tiktokForm = document.getElementById('tiktokForm');
-            const tiktokSubmitBtn = document.getElementById('tiktok-submit-btn');
-            const tiktokResultDiv = document.getElementById('tiktok-result');
-
-            tiktokForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const url = document.getElementById('tiktok-url').value;
-                if (!url) {
-                    tiktokResultDiv.innerHTML = "Silakan masukkan URL TikTok.";
-                    return;
-                }
-
-                tiktokSubmitBtn.disabled = true;
-                tiktokSubmitBtn.innerText = "Memproses...";
-                tiktokResultDiv.innerHTML = "Sedang mencari video...";
-
-                try {
-                    const response = await fetch('/api/tiktok', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ url: url }),
-                    });
-
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.error || 'Gagal mengambil video');
-                    }
-
-                    tiktokResultDiv.innerHTML = `
-                        <p>Video ditemukan!</p>
-                        <a href="${data.downloadUrl}" class="download-link" target="_blank" rel="noopener noreferrer" download>
-                            Klik Di Sini Untuk Mengunduh
-                        </a>
-                        <p style="font-size: 0.8rem; margin-top: 10px;">(Jika tidak terunduh, klik kanan dan pilih "Save link as...")</p>
-                    `;
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    tiktokResultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
-                } finally {
-                    tiktokSubmitBtn.disabled = false;
-                    tiktokSubmitBtn.innerText = "Unduh Tanpa WM";
-                }
-            });
-
-            // --- JAVASCRIPT UNTUK TAB 4: AI CHAT ---
-            const aiForm = document.getElementById('aiForm');
-            const aiSubmitBtn = document.getElementById('ai-submit-btn');
-            const aiResultDiv = document.getElementById('ai-result');
-
-            aiForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const prompt = document.getElementById('ai-prompt').value;
-                if (!prompt) {
-                    aiResultDiv.innerText = "Silakan masukkan prompt terlebih dahulu.";
-                    return;
-                }
-
-                aiSubmitBtn.disabled = true;
-                aiSubmitBtn.innerText = "Memproses...";
-                aiResultDiv.innerText = "AI sedang berpikir...";
-
-                try {
-                    const response = await fetch('/api/gemini', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ prompt: prompt }),
-                    });
-
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                    const data = await response.json();
-                    aiResultDiv.innerText = data.reply;
-
-                } catch (error)
-                 {
-                    console.error('Error:', error);
-                    aiResultDiv.innerText = "Terjadi kesalahan saat menghubungi AI. Coba lagi nanti.";
-                } finally {
-                    aiSubmitBtn.disabled = false;
-                    aiSubmitBtn.innerText = "Kirim ke AI";
-                }
-            });
-
-        }); // Akhir dari DOMContentLoaded
-    </script>
+}); // DOMContentLoaded
+</script>
 
 </body>
 </html>
